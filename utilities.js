@@ -3,15 +3,14 @@ var cp = require("child_process");
 
 function execCommand(command) {
     console.log(command);
-    cp.spawn(command,function(error,stdout,stderr){
-        if(error || stderr) {
-            let errorString = error ? error : stderr;
-            throw "Error " + errorString;
-        }
-        else {
-            console.log(stdout);
-        }
-    })
+    let proc = cp.spawn(command);
+
+    proc.on('exit', function (code, signal) {
+        console.log('child process exited with ' + `code ${code} and signal ${signal}`);
+    });
+    proc.stderr.on('data', (data) => {
+        console.error(`child stderr:\n${data}`);
+    });
 }
 
 function setHostname(hostname) {
