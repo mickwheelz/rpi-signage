@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var utilities = require('./utilities.js');
 
 app.post('/setConfig', function (req, res) {
     fs.writeFile('config.json', JSON.stringify(req.body), function (err) {
