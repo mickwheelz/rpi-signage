@@ -59,6 +59,7 @@ module.exports.applyConfig = function applyConfig(c) {
 
 module.exports.init = function init() {
 
+    console.log(procMap);
     //check if anything is running and kill it
     if(procMap) {
         procMap.forEach(pr => {
