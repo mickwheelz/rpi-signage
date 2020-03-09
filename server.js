@@ -21,16 +21,21 @@ app.get('/getConfig', function (req, res) {
 })
 
 app.get('/getSysInfo', function (req, res) {
-    utilities.init();
+    res.sendStatus(200);
     res.end('TODO:this');
 })
 
 app.get('/reInit', function (req, res) {
     utilities.init();
+    res.sendStatus(200);
+    res.end('reinit successful');
+
 })
 
 app.get('/refreshDisplay', function (req, res) {
     utilities.refreshDisplay();
+    res.sendStatus(200);
+    res.end('refresh successful');
 })
 
 var server = app.listen(3000, function () {
