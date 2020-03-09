@@ -27,7 +27,7 @@ function setHostname(hostname) {
 }
 
 module.exports.refreshDisplay = function refreshDisplay() {
-    execCommand('refresh', './refresh-browser.sh', null);
+    execCommand('refresh', './refresh-browser.sh', []);
 }
 
 module.exports.readConfigFromDisk = function readConfigFromDisk(configFileName) {
