@@ -16,7 +16,7 @@ function execCommand(name, command, args) {
 
     procMap.push({
         name: name,
-        proc: proc
+        process: proc
     });
 }
 
@@ -67,7 +67,8 @@ module.exports.init = function init() {
 
     if(procMap) {
         procMap.forEach(pr => {
-            pr.proc.kill('SIGKILL');
+            console.log(pr.name);
+            pr.process.kill('SIGKILL');
         });
     }
 
