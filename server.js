@@ -25,6 +25,10 @@ app.get('/getSysInfo', function (req, res) {
     res.end('TODO:this');
 })
 
+app.get('/reInit', function (req, res) {
+    utilities.init();
+})
+
 app.get('/refreshDisplay', function (req, res) {
     res.end('TODO:this');
 })
