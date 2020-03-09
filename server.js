@@ -1,8 +1,12 @@
 var express = require('express');
 var app = express();
 var utilities = require('./utilities.js');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/setConfig', function (req, res) {
+    console.log(req.body);
     utilities.writeConfigToDisk(req.body, 'config.json');
     utilities.init();
     res.send('Success!');
