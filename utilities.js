@@ -40,7 +40,7 @@ module.exports.applyConfig = function applyConfig(c) {
 
     if(config.mode === "web") {
         console.log('web mode');
-        let chromeCommand = 'open -a \"Google Chrome\"';
+        let chromeCommand = 'DISPLAY=:0 chromium-browser';
         execCommand(chromeCommand);
        // proc.kill();
     }

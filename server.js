@@ -9,8 +9,9 @@ app.post('/setConfig', function (req, res) {
 })
 
 app.get('/getConfig', function (req, res) {
-    fs.readFile('config.json', 'utf8', function (err, data) {
-        res.end( JSON.stringify(data));
+    let readPromise = utilities.readConfigFromDisk('config.json');
+    readPromise.then(data => {
+        res.end( JSON.stringify(data) );
     });
 })
 
