@@ -39,28 +39,31 @@ module.exports.readConfigFromDisk = function readConfigFromDisk(configFileName) 
             resolve(data);
         });
      })
-};
+}
 
 module.exports.applyConfig = function applyConfig(c) {
     config = JSON.parse(c);
 
     if(config.mode === "web") {
         console.log('web mode');
-        let chromeCommand = './chrome.sh';
-        execCommand('chrome', chromeCommand, [config.webURL]);
+        execCommand('chrome', './chrome.sh', [config.webURL]);
     }
     if(config.mode === "slideshow") {
         console.log('slideshow mode');
-        //do slideshow
-        //run slideshow app with given filepath
+        this.mountNetwork(config);
+        execCommand('slideshow', './slideshow.sh', [config.webURL]);
     }
-};
+}
 
 module.exports.writeConfigToDisk = function writeConfigToDisk(config, configFileName) {
     fs.writeFile(configFileName, JSON.stringify(config), function (err) {
         if (err) throw err;
         console.log('Saved! to ' + configFileName);
     });
+}
+
+module.exports.mountNetwork = function mountNetwork(config) {
+    execCommand('mount-network', './mount-network.sh', [config.slideshowURL]);
 }
 
 module.exports.init = function init() {
@@ -77,7 +80,4 @@ module.exports.init = function init() {
         console.log('Applying Config!');
         this.applyConfig(res);
     });
-};
-
-
-
+}
