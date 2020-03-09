@@ -6,7 +6,9 @@ app.post('/setConfig', function (req, res) {
     fs.writeFile('config.json', JSON.stringify(req.body), function (err) {
         if (err) throw err;
         console.log('Saved!');
+        utilities.init();
     });
+    
 })
 
 app.get('/getConfig', function (req, res) {
@@ -17,6 +19,7 @@ app.get('/getConfig', function (req, res) {
 })
 
 app.get('/getSysInfo', function (req, res) {
+    utilities.init();
     res.end('TODO:this');
 })
 

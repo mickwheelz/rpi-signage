@@ -1,15 +1,22 @@
 var fs = require("fs");
 var cp = require("child_process");
 
-function execCommand(command, args) {
+let procMap = [];
+let config = {};
+
+function execCommand(name, command, args) {
     console.log(command);
     let proc = cp.spawn(command, args);
-
     proc.on('exit', function (code, signal) {
         console.log('child process exited with ' + `code ${code} and signal ${signal}`);
     });
     proc.stderr.on('data', (data) => {
         console.error(`child stderr:\n${data}`);
+    });
+
+    procMap.push({
+        name: name,
+        proc: proc
     });
 }
 
@@ -41,8 +48,7 @@ module.exports.applyConfig = function applyConfig(c) {
     if(config.mode === "web") {
         console.log('web mode');
         let chromeCommand = './chrome.sh';
-        execCommand(chromeCommand, [config.webURL]);
-       // proc.kill();
+        execCommand('chrome', chromeCommand, [config.webURL]);
     }
     if(config.mode === "slideshow") {
         console.log('slideshow mode');
@@ -50,3 +56,20 @@ module.exports.applyConfig = function applyConfig(c) {
         //run slideshow app with given filepath
     }
 };
+
+module.exports.init = function init() {
+
+    //check if anything is running and kill it
+    if(procMap) {
+        procMap.forEach(pr => {
+            pr.proc.kill();
+        });
+    }
+
+    let readConfig = this.readConfigFromDisk('config.json');
+    readConfig.then(res => {
+        console.log('Applying Config!');
+        this.applyConfig(res);
+    });
+};
+
