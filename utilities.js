@@ -57,6 +57,13 @@ module.exports.applyConfig = function applyConfig(c) {
     }
 };
 
+module.exports.writeConfigToDisk = function writeConfigToDisk(config, configFileName) {
+    fs.writeFile(configFileName, JSON.stringify(config), function (err) {
+        if (err) throw err;
+        console.log('Saved! to ' + configFileName);
+    });
+}
+
 module.exports.init = function init() {
 
     console.log(procMap);
@@ -73,4 +80,6 @@ module.exports.init = function init() {
         this.applyConfig(res);
     });
 };
+
+
 

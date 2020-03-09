@@ -3,12 +3,9 @@ var app = express();
 var utilities = require('./utilities.js');
 
 app.post('/setConfig', function (req, res) {
-    fs.writeFile('config.json', JSON.stringify(req.body), function (err) {
-        if (err) throw err;
-        console.log('Saved!');
-        utilities.init();
-    });
-    
+    utilities.writeConfigToDisk(req.body, 'config.json');
+    utilities.init();
+    res.send('Success!');
 })
 
 app.get('/getConfig', function (req, res) {
