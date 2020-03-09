@@ -12,7 +12,7 @@ app.post('/setConfig', function (req, res) {
 app.get('/getConfig', function (req, res) {
     let readPromise = utilities.readConfigFromDisk('config.json');
     readPromise.then(data => {
-        res.end( JSON.stringify(data) );
+        res.end(data);
     });
 })
 

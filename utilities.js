@@ -39,8 +39,8 @@ module.exports.applyConfig = function applyConfig(c) {
 
     if(config.mode === "web") {
         console.log('web mode');
-        let chromeCommand = 'DISPLAY=:0 chromium-browser';
-        execCommand(chromeCommand);
+        let chromeCommand = './chrome.sh';
+        execCommand(chromeCommand, [webURL]);
        // proc.kill();
     }
     if(config.mode === "slideshow") {
