@@ -26,8 +26,8 @@ function setHostname(hostname) {
     //reboot
 }
 
-function refreshDisplay() {
-    //TODO: This
+module.exports.refreshDisplay = function refreshDisplay() {
+    execCommand('refresh', './refresh-browser.sh', null);
 }
 
 module.exports.readConfigFromDisk = function readConfigFromDisk(configFileName) {
@@ -43,7 +43,6 @@ module.exports.readConfigFromDisk = function readConfigFromDisk(configFileName) 
 
 module.exports.applyConfig = function applyConfig(c) {
     config = JSON.parse(c);
-    console.log(config);
 
     if(config.mode === "web") {
         console.log('web mode');
@@ -68,7 +67,7 @@ module.exports.init = function init() {
 
     if(procMap) {
         procMap.forEach(pr => {
-            pr.proc.kill('SIGINT');
+            pr.proc.kill('SIGKILL');
         });
     }
 

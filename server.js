@@ -30,7 +30,7 @@ app.get('/reInit', function (req, res) {
 })
 
 app.get('/refreshDisplay', function (req, res) {
-    res.end('TODO:this');
+    utilities.refreshDisplay();
 })
 
 var server = app.listen(3000, function () {
