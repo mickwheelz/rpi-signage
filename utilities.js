@@ -1,9 +1,9 @@
 var fs = require("fs");
 var cp = require("child_process");
 
-function execCommand(command) {
+function execCommand(command, args) {
     console.log(command);
-    let proc = cp.spawn(command);
+    let proc = cp.spawn(command, args);
 
     proc.on('exit', function (code, signal) {
         console.log('child process exited with ' + `code ${code} and signal ${signal}`);
@@ -36,6 +36,7 @@ module.exports.readConfigFromDisk = function readConfigFromDisk(configFileName) 
 
 module.exports.applyConfig = function applyConfig(c) {
     config = JSON.parse(c);
+    console.log(config);
 
     if(config.mode === "web") {
         console.log('web mode');
