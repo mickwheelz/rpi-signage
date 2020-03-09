@@ -1,0 +1,6 @@
+{
+    "mode": "web",
+    "webURL": "http://www.google.com",
+    "slideshowURL": "/home/pi/pics",
+    "hostname": "pidisplay1"
+}
