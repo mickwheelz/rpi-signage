@@ -71,7 +71,7 @@ module.exports.init = function init() {
     if(procMap) {
         procMap.forEach(pr => {
             console.log(pr.name);
-            pr.process.exit();
+            pr.process.kill();
         });
     }
 
