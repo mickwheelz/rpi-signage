@@ -1,5 +1,7 @@
-var fs = require("fs");
-var cp = require("child_process");
+const fs = require("fs");
+const cp = require("child_process");
+const request = require('request')
+const internalIp = require('internal-ip');
 
 let procMap = [];
 let config = {};
@@ -24,6 +26,21 @@ function setHostname(hostname) {
     //check hostname first
     //set
     //reboot
+}
+
+function callManagemntServer(config) {
+    request.post(config.managementServer, {
+        json: {
+            name: config.hostname,
+            address: internalIp.v4.sync()
+        }
+    }, (err, res, body) => {
+        if (err) {
+            throw err
+        }
+        console.log(`statusCode: ${res.statusCode}`)
+        console.log(body)
+    })
 }
 
 module.exports.refreshDisplay = function refreshDisplay() {
@@ -89,8 +106,10 @@ module.exports.init = function init() {
     }
 
     let readConfig = this.readConfigFromDisk('config.json');
+    
     readConfig.then(res => {
         console.log('Applying Config!');
         this.applyConfig(res);
+        callManagemntServer(config);
     });
 }

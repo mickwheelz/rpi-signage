@@ -5,5 +5,6 @@
     "slideshowURL": "/home/pi/pics",
     "slideshowURLType":"local",
     "hostname": "pidisplay1",
-    "slideTimeout": "5"
+    "slideTimeout": "5",
+    "managementServer":"http://localhost:3000/mgmt"
 }
