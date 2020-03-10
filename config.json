@@ -2,5 +2,6 @@
     "mode": "web",
     "webURL": "http://www.google.com",
     "slideshowURL": "/home/pi/pics",
-    "hostname": "pidisplay1"
+    "hostname": "pidisplay1",
+    "slideTimeout": "5"
 }

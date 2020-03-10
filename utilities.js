@@ -51,7 +51,7 @@ module.exports.applyConfig = function applyConfig(c) {
     if(config.mode === "slideshow") {
         console.log('slideshow mode');
         this.mountNetwork(config);
-        execCommand('slideshow', './slideshow.sh', [config.webURL]);
+        execCommand('slideshow', './slideshow.sh', ['/usr/share/rpd-wallpaper', config.slideTimeout]);
     }
 }
 
