@@ -1,7 +1,9 @@
 {
     "mode": "web",
     "webURL": "http://www.google.com",
+    "webAutoRefresh":0,
     "slideshowURL": "/home/pi/pics",
+    "slideshowURLType":"local",
     "hostname": "pidisplay1",
     "slideTimeout": "5"
 }

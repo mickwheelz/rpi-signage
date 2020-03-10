@@ -46,12 +46,29 @@ module.exports.applyConfig = function applyConfig(c) {
 
     if(config.mode === "web") {
         console.log('web mode');
+        
+        //open chrome in kiosk mode to given URL
         execCommand('chrome', './chrome.sh', [config.webURL]);
+        if(config.webAutoRefresh !== 0) {
+            setInterval(function () { 
+                //press 'F5' every x seconds
+                this.refreshDisplay();
+            }, config.webAutoRefresh); 
+        }
     }
     if(config.mode === "slideshow") {
         console.log('slideshow mode');
-        //this.mountNetwork(config);
-        execCommand('slideshow', './slideshow.sh', ['/usr/share/rpd-wallpaper', config.slideTimeout]);
+
+        if(config.slideshowURLType !== "local") {
+            // mount the network path to /media/slideshow
+            execCommand('mount-network', './mount-network.sh', [config.slideshowURLType, config.slideshowURL]);
+            //run the slideshow
+            execCommand('slideshow', './slideshow.sh', ['/media/slideshow', config.slideTimeout]);
+        }
+        else {
+            //run the slideshow
+            execCommand('slideshow', './slideshow.sh', [config.slideshowURL, config.slideTimeout]);
+        }
     }
 }
 
@@ -60,10 +77,6 @@ module.exports.writeConfigToDisk = function writeConfigToDisk(config, configFile
         if (err) throw err;
         console.log('Saved! to ' + configFileName);
     });
-}
-
-module.exports.mountNetwork = function mountNetwork(config) {
-    execCommand('mount-network', './mount-network.sh', [config.slideshowURL]);
 }
 
 module.exports.init = function init() {
