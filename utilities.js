@@ -96,9 +96,11 @@ module.exports.writeConfigToDisk = function writeConfigToDisk(config, configFile
 
 module.exports.init = function init() {
 
-    console.log(procMap.keys().length);
+    console.log(procMap.keys());
+    console.log(procMap);
 
-    if(procMap.keys().length > 0) {
+
+    if(procMap.keys()) {
         procMap.keys().forEach(pn => {
             console.log(pn);
             procMap[pn].kill('SIGINT');
