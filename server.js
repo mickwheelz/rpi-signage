@@ -29,7 +29,6 @@ app.get('/reInit', function (req, res) {
     utilities.init();
     res.sendStatus(200);
     res.end('reinit successful');
-
 })
 
 app.get('/refreshDisplay', function (req, res) {

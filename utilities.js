@@ -3,7 +3,7 @@ const cp = require("child_process");
 const request = require('request')
 const internalIp = require('internal-ip');
 
-let procMap = [];
+let procMap = new Map();
 let config = {};
 
 function execCommand(name, command, args) {
@@ -16,10 +16,7 @@ function execCommand(name, command, args) {
         console.error(`child stderr:\n${data}`);
     });
 
-    procMap.push({
-        name: name,
-        process: proc
-    });
+    procMap.set(name, proc);
 }
 
 function setHostname(hostname) {
