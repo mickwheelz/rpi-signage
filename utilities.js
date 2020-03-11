@@ -28,18 +28,20 @@ function setHostname(hostname) {
 }
 
 function callManagemntServer(config) {
-    request.post(config.managementServer, {
-        json: {
-            name: config.hostname,
-            address: internalIp.v4.sync()
-        }
-    }, (err, res, body) => {
-        if (err) {
-            throw err
-        }
-        console.log(`statusCode: ${res.statusCode}`)
-        console.log(body)
-    })
+    if(console.managementServer) {
+        request.post(config.managementServer, {
+            json: {
+                name: config.hostname,
+                address: internalIp.v4.sync()
+            }
+        }, (err, res, body) => {
+            if (err) {
+                throw err
+            }
+            console.log(`statusCode: ${res.statusCode}`)
+            console.log(body)
+        });
+    }
 }
 
 module.exports.refreshDisplay = function refreshDisplay() {
@@ -95,8 +97,9 @@ module.exports.writeConfigToDisk = function writeConfigToDisk(config, configFile
 module.exports.init = function init() {
 
     if(procMap.values().length > 0) {
-        procMap.values().forEach(p => {
-            p.kill();
+        procMap.keys().forEach(pn => {
+            console.log(pn);
+            procMap[pn].kill('SIGINT');
         });
     }
 
