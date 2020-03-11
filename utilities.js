@@ -95,9 +95,8 @@ module.exports.writeConfigToDisk = function writeConfigToDisk(config, configFile
 module.exports.init = function init() {
 
     if(procMap) {
-        procMap.forEach(pr => {
-            console.log(pr.name);
-            pr.process.kill();
+        map1.values().forEach(p => {
+            p.kill();
         });
     }
 
