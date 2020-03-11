@@ -45,7 +45,7 @@ function callManagemntServer(config) {
 }
 
 module.exports.refreshDisplay = function refreshDisplay() {
-    execCommand('refresh', 'xdotool', ['key F5']);
+    execCommand('refresh', 'xdotool', ['key','F5']);
 }
 
 module.exports.readConfigFromDisk = function readConfigFromDisk(configFileName) {
