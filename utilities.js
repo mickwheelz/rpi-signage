@@ -3,7 +3,7 @@ const cp = require("child_process");
 const request = require('request')
 const internalIp = require('internal-ip');
 
-let procMap = new Map();
+let runningProcesses = [];
 let config = {};
 
 function execCommand(name, command, args) {
@@ -18,7 +18,7 @@ function execCommand(name, command, args) {
         console.error(`child stderr:\n${data}`);
     });
 
-    procMap.set(name, proc);
+    runningProcesses.push(proc);
 }
 
 function setHostname(hostname) {
@@ -96,15 +96,11 @@ module.exports.writeConfigToDisk = function writeConfigToDisk(config, configFile
 
 module.exports.init = function init() {
 
-    console.log(procMap.keys());
-    console.log(procMap);
-
-
-    if(procMap.keys()) {
-        procMap.keys().forEach(pn => {
-            console.log(pn);
-            procMap[pn].kill('SIGINT');
+    if(runningProcesses) {
+        runningProcesses.forEach(proc => {
+            proc.kill('SIGINT');
         });
+        runningProcesses = [];
     }
 
     let readConfig = this.readConfigFromDisk('config.json');
