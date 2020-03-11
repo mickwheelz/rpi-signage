@@ -7,8 +7,10 @@ let procMap = new Map();
 let config = {};
 
 function execCommand(name, command, args) {
-    console.log(command);
+    console.log(`Command ${command} run with args ${args}`);
+
     let proc = cp.spawn(command, args);
+
     proc.on('exit', function (code, signal) {
         console.log('child process exited with ' + `code ${code} and signal ${signal}`);
     });
@@ -41,7 +43,7 @@ function callManagemntServer(config) {
 }
 
 module.exports.refreshDisplay = function refreshDisplay() {
-    execCommand('refresh', './refresh-browser.sh', []);
+    execCommand('refresh', 'xdotool', ['key F5']);
 }
 
 module.exports.readConfigFromDisk = function readConfigFromDisk(configFileName) {
@@ -62,7 +64,8 @@ module.exports.applyConfig = function applyConfig(c) {
         console.log('web mode');
         
         //open chrome in kiosk mode to given URL
-        execCommand('chrome', './chrome.sh', [config.webURL]);
+        execCommand('chrome', 'chromium-browser', ['--kiosk', `--app=${config.webURL}`]);
+
         if(config.webAutoRefresh !== 0) {
             setInterval(function () { 
                 //press 'F5' every x seconds
@@ -73,16 +76,12 @@ module.exports.applyConfig = function applyConfig(c) {
     if(config.mode === "slideshow") {
         console.log('slideshow mode');
 
+        // mount the network path to /media/slideshow
         if(config.slideshowURLType !== "local") {
-            // mount the network path to /media/slideshow
-            execCommand('mount-network', './mount-network.sh', [config.slideshowURLType, config.slideshowURL]);
-            //run the slideshow
-            execCommand('slideshow', './slideshow.sh', ['/media/slideshow', config.slideTimeout]);
+            //execCommand('mount-network', './mount-network.sh', [config.slideshowURLType, config.slideshowURL]);
         }
-        else {
-            //run the slideshow
-            execCommand('slideshow', './slideshow.sh', [config.slideshowURL, config.slideTimeout]);
-        }
+        execCommand('slideshow', 'slide', [`-p ${config.slideshowURL}`, `-t ${config.slideTimeout}`]);
+
     }
 }
 
