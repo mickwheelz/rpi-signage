@@ -6,5 +6,5 @@
     "slideshowURLType":"local",
     "hostname": "pidisplay1",
     "slideTimeout": "5",
-    "managementServer":"http://localhost:3000/mgmt"
+    "managementServer":"http://192.168.199.134:8080/mgmt"
 }

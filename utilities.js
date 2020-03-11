@@ -28,7 +28,8 @@ function setHostname(hostname) {
 }
 
 function callManagemntServer(config) {
-    if(console.managementServer) {
+    
+    if(config.managementServer) {
         request.post(config.managementServer, {
             json: {
                 name: config.hostname,
